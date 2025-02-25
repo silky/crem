@@ -2,7 +2,7 @@
   description = "tweag/crem: compositional reproducible executable machines";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     flake-utils.url = "github:numtide/flake-utils";
     nix-filter.url = "github:numtide/nix-filter";
@@ -40,11 +40,28 @@
             hpack = pkgs.hpack;
             crem = pkgs.haskell.lib.compose.disableCabalFlag "test-doctest" ((self.callCabal2nix "crem" src { }).overrideAttrs (attrs: {
               # doctest-parallel needs to know where the compiled crem package is
-              preCheck = ''
-                export GHC_PACKAGE_PATH="dist/package.conf.inplace:$GHC_PACKAGE_PATH"
-              '';
+              # preCheck = ''
+              #   export GHC_PACKAGE_PATH="dist/package.conf.inplace:$GHC_PACKAGE_PATH"
+              # '';
             }));
-            fourmolu = pkgs.haskell.packages.ghc96.fourmolu;
+            th-desugar = self.callHackage "th-desugar" "1.17" {};
+            singletons-th = self.callHackage "singletons-th" "3.4" {};
+            singletons-base = self.callHackage "singletons-base" "3.4" {};
+
+            # fourmolu = pkgs.haskell.packages.ghc96.fourmolu;
+
+            # template-haskell = self.callHackage "template-haskell" "2.11" {};
+
+            # th-desugar = pkgs.haskell.lib.doJailbreak super.th-desugar;
+            # th-desugar = pkgs.haskell.lib.doJailbreak super.th-desugar;
+
+            # th-desugar = super.th-desugar.overrideAttrs (old: {
+              # libraryHaskellDepends = builtins.throw "xxxxxxxxxxxxx";
+              # buildDepends = [
+              #   self.template-haskell
+              #   self.th-abstraction
+              # ];
+            # });
           };
         };
 
@@ -62,7 +79,7 @@
           configurations;
 
       # The version of GHC used for default package and development shell.
-      defaultGhcVersion = "ghc96";
+      defaultGhcVersion = "ghc9101";
 
       # This is a shell utility that watches source files for changes, and triggers a
       # command when they change.
@@ -119,7 +136,7 @@
             nativeBuildInputs = with haskellPackages; [
               cabal-install
               fourmolu
-              haskell-language-server
+              # haskell-language-server
               build-watch
               test-watch
             ];
