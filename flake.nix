@@ -2,8 +2,8 @@
   description = "tweag/crem: compositional reproducible executable machines";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     flake-utils.url = "github:numtide/flake-utils";
     nix-filter.url = "github:numtide/nix-filter";
     flake-compat = {
@@ -44,7 +44,7 @@
                 export GHC_PACKAGE_PATH="dist/package.conf.inplace:$GHC_PACKAGE_PATH"
               '';
             }));
-            fourmolu = pkgs.haskell.packages.ghc944.fourmolu;
+            fourmolu = pkgs.haskell.packages.ghc96.fourmolu;
           };
         };
 
@@ -62,7 +62,7 @@
           configurations;
 
       # The version of GHC used for default package and development shell.
-      defaultGhcVersion = "ghc90";
+      defaultGhcVersion = "ghc96";
 
       # This is a shell utility that watches source files for changes, and triggers a
       # command when they change.
