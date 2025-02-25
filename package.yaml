@@ -117,15 +117,15 @@ ghc-options:
   - -Wno-prepositive-qualified-module  # https://downloads.haskell.org/ghc/latest/docs/users_guide/using-warnings.html#ghc-flag--Wprepositive-qualified-module
 
 dependencies:
-  - base >= 4.15 && < 4.19
+  - base
 
 library:
   source-dirs:      src
   dependencies:
-    - profunctors >= 3.2 && < 5.7
-    - singletons-base >= 3.0 && < 3.3
-    - text >= 1.2 && < 2.1
-    - nothunks >= 0.1 && < 0.4
+    - profunctors
+    - singletons-base
+    - text
+    - nothunks
   # Disable adding Paths_crem to other-modules, because it does not conform to our style guide.
   # https://github.com/sol/hpack#handling-of-paths_-modules
   when:
@@ -153,7 +153,7 @@ tests:
     dependencies:
       - crem
       - crem-examples
-      - hspec >= 2.7 && < 2.12
+      - hspec
       - profunctors
       - singletons-base
     build-tools: hspec-discover:hspec-discover
